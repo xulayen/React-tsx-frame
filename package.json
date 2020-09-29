@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/dotenv": "^8.2.0",
     "@types/history": "^4.7.8",
     "@types/jest": "^24.0.0",
     "@types/lodash": "^4.14.161",
@@ -20,6 +21,7 @@
     "antd": "^4.6.5",
     "babel-plugin-react-css-modules": "^5.2.6",
     "babel-polyfill": "^6.26.0",
+    "dotenv": "^8.2.0",
     "mddir": "^1.1.1",
     "mobx": "^5.15.7",
     "mobx-react": "^6.3.0",
@@ -34,8 +36,9 @@
   },
   "scripts": {
     "analyze": "source-map-explorer build/static/js/9.43748582.*",
-    "start": "set PORT=3000 && react-app-rewired start ",
-    "build": "set NODE_ENV=production && react-app-rewired build ",
+    "start": "set PORT=3000 && dotenv -e .env.development react-app-rewired start ",
+    "build:test": "set NODE_ENV=production && dotenv -e .env.test react-app-rewired build ",
+    "build": "set NODE_ENV=production && dotenv -e .env.production react-app-rewired build ",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
@@ -57,6 +60,7 @@
   "devDependencies": {
     "babel-plugin-import": "^1.13.0",
     "customize-cra": "^1.0.0",
+    "dotenv-cli": "^4.0.0",
     "http-proxy-middleware": "^1.0.5",
     "less": "^3.12.2",
     "less-loader": "^7.0.1",

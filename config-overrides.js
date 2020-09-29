@@ -9,6 +9,7 @@ const path = require('path');
 
 
 const alter_config = () => (config, env) => {
+    console.log(env);
     const oneOf_loc = config.module.rules.findIndex(n => n.oneOf)
     config.module.rules[oneOf_loc].oneOf = [    //例如要增加处理less的配置
         {

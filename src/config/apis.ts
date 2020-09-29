@@ -1,5 +1,6 @@
-const local=`http://dmpro8.zhsh.co/txzapi`;
 
+console.log(process.env);
+const local = process.env.REACT_APP_API_URL;
 export default {
     getCode: `${local}/LotteryNew/GetWxAuthCode`
 }
