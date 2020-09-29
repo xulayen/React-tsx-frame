@@ -3,22 +3,40 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@loadable/component": "^5.13.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "@types/history": "^4.7.8",
     "@types/jest": "^24.0.0",
+    "@types/lodash": "^4.14.161",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
+    "@types/react-css-modules": "^4.6.2",
     "@types/react-dom": "^16.9.0",
+    "@types/react-loadable": "^5.5.3",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/request-promise": "^4.1.46",
+    "antd": "^4.6.5",
+    "babel-plugin-react-css-modules": "^5.2.6",
+    "babel-polyfill": "^6.26.0",
+    "mddir": "^1.1.1",
+    "mobx": "^5.15.7",
+    "mobx-react": "^6.3.0",
     "react": "^16.13.1",
+    "react-css-modules": "^4.7.11",
     "react-dom": "^16.13.1",
+    "react-native-storage": "^1.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "request-promise": "^4.2.6",
     "typescript": "~3.7.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "analyze": "source-map-explorer build/static/js/9.43748582.*",
+    "start": "set PORT=3000 && react-app-rewired start ",
+    "build": "set NODE_ENV=production && react-app-rewired build ",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -35,5 +53,13 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.13.0",
+    "customize-cra": "^1.0.0",
+    "http-proxy-middleware": "^1.0.5",
+    "less": "^3.12.2",
+    "less-loader": "^7.0.1",
+    "react-app-rewired": "^2.1.6"
   }
 }
