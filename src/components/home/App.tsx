@@ -8,6 +8,7 @@ function App(props: any) {
   const store = props.store.home.HomeStore;
   function cluseNum() {
     ++store.txtMobile;
+    props.history.push('/antd')
   }
 
   useEffect(() => {
