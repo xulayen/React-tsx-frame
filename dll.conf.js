@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const {
   CleanWebpackPlugin
-} = require('clean-webpack-plugin')
+} = require('clean-webpack-plugin');
 
 
 // dll文件存放的目录
@@ -11,7 +11,9 @@ const dllPath = 'public/vendor'
 module.exports = {
   entry: {
     // 需要提取的库文件
-    vendor: ['react', 'react-dom', 'react-native-storage', 'react-router-dom', 'antd', 'mobx', 'mobx-react']
+    vendor: ['react', 'react-dom', 'react-native-storage', 'react-router-dom', 'antd', 'mobx', 'mobx-react',
+      'react-css-modules', 'history', 'lodash', 'babel-polyfill'],
+    common: ['mime', 'mime-db', 'stream-http', 'ajv', 'psl', 'elliptic', 'sshpk', 'bluebird', 'pako', 'react-error-overlay']
   },
   output: {
     path: path.join(__dirname, dllPath),
@@ -36,5 +38,17 @@ module.exports = {
       name: '[name]_[hash]',
       context: process.cwd()
     })
-  ]
+
+  ],
+  // optimization:{
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       vendor: {
+  //         name: 'vendor',
+  //         chunks: 'initial',
+  //         minChunks: 10
+  //       }
+  //     }
+  //   }
+  // }
 }

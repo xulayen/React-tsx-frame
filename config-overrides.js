@@ -3,13 +3,14 @@ const {
     fixBabelImports,
     addDecoratorsLegacy,
     addWebpackAlias,
-    addWebpackPlugin,
+    addWebpackPlugin
 } = require('customize-cra');
 const path = require('path');
 // 补充：对开发友好，打包完成桌面提醒
 const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const alter_config = () => (config, env) => {
     console.log(env);
@@ -81,28 +82,37 @@ const alter_config = () => (config, env) => {
 
 
 const addCustomize = () => config => {
-    //if (process.env.NODE_ENV === 'production') {
-    // config.devtool = false; //去掉map文件
-    config.plugins.push(
-        new webpack.DllReferencePlugin({
-            context: process.cwd(),
-            manifest: require('./public/vendor/vendor-manifest.json')
-        }),
-        // 将 dll 注入到 生成的 html 模板中
-        new AddAssetHtmlPlugin({
-            // dll文件位置
-            filepath: path.resolve(__dirname, './public/vendor/*.js'),
-            // dll 引用路径
-            publicPath: 'http://10.20.26.19/ttt/vendor',
-            // dll最终输出的目录
-            outputPath: './vendor'
-        }),
-        // 释放 可以解析项目
-        // new BundleAnalyzerPlugin({
-        //     analyzerMode: 'static'
-        // })
-    )
-    //}
+    if (process.env.NODE_ENV === 'production') {
+        config.devtool = false; //去掉map文件
+        config.plugins.push(
+            new webpack.DefinePlugin({
+                'process.env': {
+                    NODE_ENV: JSON.stringify('production')
+                }
+            }),
+            new webpack.DllReferencePlugin({
+                context: process.cwd(),
+                manifest: require('./public/vendor/vendor-manifest.json')
+            }),
+            new webpack.DllReferencePlugin({
+                context: process.cwd(),
+                manifest: require('./public/vendor/common-manifest.json')
+            }),
+            // 将 dll 注入到 生成的 html 模板中
+            new AddAssetHtmlPlugin({
+                // dll文件位置
+                filepath: path.resolve(__dirname, './public/vendor/*.js'),
+                // dll 引用路径 一般设置为 CDN
+                publicPath: 'http://10.20.26.19/ttt/vendor',
+                // dll最终输出的目录
+                outputPath: './vendor'
+            }),
+            // 可以解析项目
+            new BundleAnalyzerPlugin({
+                analyzerMode: 'static'
+            })
+        )
+    }
     return config;
 }
 
@@ -110,7 +120,9 @@ module.exports = override(
     addWebpackAlias({
         "@": path.resolve(__dirname, 'src')
     }),
+    //启用装饰器
     addDecoratorsLegacy(),
+    //css按需加载
     fixBabelImports("import", {
         libraryName: "antd-mobile",
         style: true
@@ -123,7 +135,7 @@ module.exports = override(
     }),
     // 打包编译完成提醒
     addWebpackPlugin(new WebpackBuildNotifierPlugin({
-        title: "打包成功！",
+        title: "编译完成！",
         suppressSuccess: true
     })),
     addCustomize(),
